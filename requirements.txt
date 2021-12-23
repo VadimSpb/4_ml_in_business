@@ -1,0 +1,10 @@
+pandas
+gensim
+re
+numpy
+nltk
+razdel
+pymorphy2
+sklearn
+matplotlib
+itertools
