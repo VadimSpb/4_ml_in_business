@@ -15,6 +15,15 @@ class ColumnSelector(BaseEstimator, TransformerMixin):
     def transform(self, X):
         return X[self.key]
 
+class FeatureSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, column):
+        self.column = column
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        return X[self.column]
 
 class NumberSelector(BaseEstimator, TransformerMixin):
     """

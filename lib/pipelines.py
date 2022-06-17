@@ -12,9 +12,9 @@ class CVDPipeline:
     Transformer for people's data for ML
     """
     def __init__(self, params):
-        self.cont_cols  = params['continuos_cols']
-        self.cat_cols = params['cat_cols']
-        self.base_cols = params['base_cols']
+        self.cont_cols  = params.get('continuos_cols')
+        self.cat_cols = params.get('cat_cols')
+        self.base_cols = params.get('base_cols')
         self.cont_transformers = []
         self.cat_transformers = []
         self.base_transformers = []
@@ -80,7 +80,10 @@ class CVDPipeline:
         self.report = self.estimator.report(model_name=type(self.model['classifier']).__name__)
 
 
+class CharnPipeline(CVDPipeline):
 
+    def __init__(self, params):
+        super().__init__()
 
 
 
