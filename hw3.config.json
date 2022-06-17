@@ -1,5 +1,0 @@
-{
-  'continuos_cols': "age, height, weight, ap_hi, ap_lo",
-  'cat_cols': "gender, cholesterol",
-  'base_cols': "gluc, smoke, alco, active"
-}
