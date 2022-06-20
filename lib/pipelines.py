@@ -11,7 +11,7 @@ class CVDPipeline:
     """
     Transformer for people's data for ML
     """
-    def __init__(self, params):
+    def __init__(self, params, *args, **kwargs):
         self.cont_cols  = params.get('continuos_cols')
         self.cat_cols = params.get('cat_cols')
         self.base_cols = params.get('base_cols')
@@ -80,10 +80,41 @@ class CVDPipeline:
         self.report = self.estimator.report(model_name=type(self.model['classifier']).__name__)
 
 
-class CharnPipeline(CVDPipeline):
+class LookLikePipeline(CVDPipeline):
 
-    def __init__(self, params):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def fit(self,
+            x_train,
+            y_train,
+            model_type=None,
+            random_state=42):
+        final_transformers = list()
+
+        for cat_col in self.cat_cols:
+            cat_transformer = Pipeline([
+                ('selector', FeatureSelector(column=cat_col)),
+                ('ohe', OHEEncoder(key=cat_col))
+            ])
+
+            final_transformers.append((cat_col, cat_transformer))
+
+        for cont_col in self.cont_cols:
+            cont_transformer = Pipeline([
+                ('selector', NumberSelector(key=cont_col))
+            ])
+
+            final_transformers.append((cont_col, cont_transformer))
+
+        feats = FeatureUnion(final_transformers)
+
+        model = Pipeline([
+            ('features', feats),
+            ('classifier', RandomForestClassifier(random_state=random_state)),
+        ])
+        model.fit(x_train, y_train)
+
 
 
 

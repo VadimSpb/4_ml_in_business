@@ -11,6 +11,7 @@ class PrecisionReport:
         self.cnf_matrix = confusion_matrix(y_test, preds > self.thresholds[self.ix])
         self.metrics_df = None
 
+
     def report(self, model_name=None):
 
         return {
@@ -21,6 +22,13 @@ class PrecisionReport:
                     'Recall': self.recall[self.ix],
                     'ROC AUC': self.roc_auc
                     }
+    def print_report(self):
+        print(f'Best Threshold={self.thresholds}, ',
+              f'F-Score={self.fscore:.3f}, ',
+              f'Precision={self.precision:.3f},',
+              f'Recall={self.recall:.3f}'
+              )
+
 
 
 
