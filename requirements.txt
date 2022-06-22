@@ -8,3 +8,4 @@ pymorphy2
 scikit-learn
 matplotlib
 itertools
+ipyplot
